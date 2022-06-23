@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const register_1 = __importDefault(require("./register"));
 const login_1 = __importDefault(require("./login"));
 const user_1 = __importDefault(require("./user"));
-const router = [register_1.default, login_1.default, user_1.default];
+const test_1 = __importDefault(require("./test"));
+const router = [register_1.default, login_1.default, user_1.default, test_1.default];
 const registerRouter = (app) => {
     router.map((route) => {
         app.use("/api", route);
