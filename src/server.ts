@@ -1,7 +1,6 @@
+var http = require("http");
 import { config } from "dotenv";
 config();
-var http = require("http");
-
 import App from "./app";
 
 const apps = new App().app;
