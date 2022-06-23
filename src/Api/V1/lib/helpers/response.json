@@ -1,0 +1,99 @@
+[
+  {
+    "header": {
+      "code": "400",
+      "status": false,
+      "message": "Bad Request"
+    },
+    "body": {
+      "information": "User must be Required",
+      "data": []
+    }
+  },
+  {
+    "header": {
+      "code": "200",
+      "status": true,
+      "message": "OK"
+    },
+    "body": {
+      "information": "User Registered successfully",
+      "valid": true,
+      "data": [
+        {
+          "username": "akbar.neeoAgmail.com",
+
+          "token": "eyJhbGciOiJIUzI1NiJ9.YWtiYXIubmVlb0FnbWFpbC5jb20.H2vn-vBkfEdFUuPED5vW4cO-hnpG7EFzPT9vX3jxHDQ"
+        }
+      ]
+    }
+  },
+  {
+    "header": {
+      "code": "202",
+      "status": true,
+      "message": "accepted"
+    },
+    "body": {
+      "information": "UserEmail already registered",
+      "valid": false,
+      "data": []
+    }
+  },
+  {
+    "header": {
+      "code": "500",
+      "status": false,
+      "message": "Internal Server Error"
+    },
+    "body": {
+      "information": "err.message",
+      "data": []
+    }
+  },
+  {
+    "header": {
+      "code": "533",
+      "status": false,
+      "message": "DB Error"
+    },
+    "body": {
+      "information": "err.message",
+      "data": []
+    }
+  },
+  {
+    "header": {
+      "code": 401,
+      "status": false,
+      "message": "unauthorize"
+    },
+    "body": {
+      "information": "err.message",
+      "data": []
+    }
+  },
+  {
+    "header": {
+      "code": 201,
+      "status": true,
+      "message": "created"
+    },
+    "body": {
+      "information": "User Created successfully",
+      "valid": true,
+      "data": []
+    }
+  },
+  {
+    "header": {
+      "code": 403,
+      "status": false,
+      "message": "Forbidden"
+    },
+    "body": {
+      "information": "server understands the request but refuses to authorize it",
+      "data": []
+    }
+  }
+]
