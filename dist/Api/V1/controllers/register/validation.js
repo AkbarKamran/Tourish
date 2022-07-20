@@ -11,11 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = new (class registerValidation {
     constructor() {
-        this.validRegisterAdmin = (username, password) => __awaiter(this, void 0, void 0, function* () {
+        this.validRegisterAdmin = (email, username, account_type, password, phone) => __awaiter(this, void 0, void 0, function* () {
             return !!username &&
                 typeof username === "string" &&
                 typeof password === "string" &&
-                !!password
+                !!password &&
+                !!email &&
+                typeof email === "string" &&
+                !!account_type &&
+                typeof account_type === "string" &&
+                !!phone &&
+                typeof phone === "string"
                 ? false
                 : true;
         });

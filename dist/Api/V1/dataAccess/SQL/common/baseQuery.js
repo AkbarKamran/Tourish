@@ -21,8 +21,10 @@ exports.default = new (class baseQuery {
                         let req = pool.request();
                         Object.entries(columns).length === 0
                             ? req.query(query, (error, record) => {
-                                if (error)
+                                if (error) {
+                                    console.log("In error", error);
                                     reject(error);
+                                }
                                 return resolve(record.recordsets[0]);
                             })
                             : req.query(query, columns, (error, record) => {

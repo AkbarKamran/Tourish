@@ -24,22 +24,20 @@ const storage = multer_1.default.diskStorage({
         cb(null, path.join(__dirname, "/uploads/"));
     },
     filename: function (req, file, cb) {
-        console.log("Here", file.originalname);
-        cb(null, file.originalname);
+        cb(null, Date.now() + path.extname(file.originalname));
     },
 });
-// const fileFilter = (req: any, file: any, cb: any) => {
-//   if (
-//     file.mimetype === "image/jpg" ||
-//     file.mimetype === "image/jpeg" ||
-//     file.mimetype === "image/png"
-//   ) {
-//     cb(null, true);
-//   } else {
-//     cb(new Error("Image uploaded is not of type jpg/jpeg or png"), false);
-//   }
-// };
-const upload = (0, multer_1.default)({ storage: storage });
-router.post("/register", upload.single("image"), registerLogin.registerAdmin);
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === "image/jpg" ||
+        file.mimetype === "image/jpeg" ||
+        file.mimetype === "image/png") {
+        cb(null, true);
+    }
+    else {
+        cb(new Error("Image uploaded is not of type jpg/jpeg or png"), false);
+    }
+};
+const upload = (0, multer_1.default)({ storage: storage, fileFilter: fileFilter });
+router.post("/register", upload.single("profile_image"), registerLogin.registerAdmin);
 exports.default = router;
 //# sourceMappingURL=register.js.map

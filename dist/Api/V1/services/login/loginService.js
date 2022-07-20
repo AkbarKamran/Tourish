@@ -17,38 +17,43 @@ const middleware_1 = require("../../middleware/middleware");
 const hash_1 = require("../../lib/dataManipulations/hashing/hash");
 exports.default = new (class loginService {
     constructor() {
-        this.login = (username, password) => __awaiter(this, void 0, void 0, function* () {
+        this.login = (email, password) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const adminExist = yield query_1.default.isAdminExist(username);
+                const adminExist = yield query_1.default.isAdminExist(email);
                 return adminExist.length
-                    ? this.adminExists(password, username)
+                    ? this.adminExists(adminExist)
                     : {
                         valid: false,
                         username: "",
                         token: "",
-                        message: "please enter the valid username!",
+                        message: "please enter the valid email!",
                     };
             }
             catch (error) {
                 throw error;
             }
         });
-        this.adminExists = (password, username) => __awaiter(this, void 0, void 0, function* () {
+        this.adminExists = (UserExists) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const dbHash = yield query_1.default.adminPasswordVerification(username, password);
-                return this.verifyPassword(password, dbHash, username);
+                const dbHash = yield query_1.default.adminPasswordVerification(UserExists[0].email, UserExists[0].password);
+                return this.verifyPassword(UserExists, dbHash);
             }
             catch (error) {
                 throw error;
             }
         });
-        this.verifyPassword = (password, dbHash, username) => __awaiter(this, void 0, void 0, function* () {
+        this.verifyPassword = (UserExists, dbHash) => __awaiter(this, void 0, void 0, function* () {
             try {
-                if (yield (0, hash_1.verifyHash)(password, dbHash)) {
-                    const token = yield (0, middleware_1.createToken)(username);
+                let res = yield (0, hash_1.verifyHash)(UserExists[0].password, dbHash);
+                // console.log(res);
+                if (yield (0, hash_1.verifyHash)(UserExists[0].password, dbHash)) {
+                    //console.log("In Suceess");
+                    const token = yield (0, middleware_1.createToken)(UserExists[0].email);
                     let data = {
+                        id: UserExists[0].ID,
                         valid: true,
-                        data: username,
+                        email: UserExists[0].email,
+                        profile_image: UserExists[0].profile_image,
                         token: token,
                         message: "welcome",
                     };

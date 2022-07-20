@@ -8,39 +8,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginController = void 0;
+const validation_1 = __importDefault(require("./validation"));
+const registerService_1 = __importDefault(require("../../services/register/registerService"));
+const responseHandler_1 = require("../../lib/helpers/response/responseHandler");
 class loginController {
     constructor() {
         this.registerAdmin = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            console.log(JSON.stringify(req.file));
-            res.json(req.file);
-            // try {
-            //   const { username, password } = req.body;
-            //   const validCheck = await registerValidation.validRegisterAdmin(
-            //     username,
-            //     password
-            //   );
-            //   if (validCheck)
-            //     successResponse(400, "Invalid Parameter", [{ valid: false }], res);
-            //   else {
-            //     try {
-            //       let data = await registerService.serviceRegisterAdmin(
-            //         username,
-            //         password
-            //       );
-            //       successResponse(200, "success", [data], res);
-            //     } catch (error: any) {
-            //       dbError([{ valid: false, data: error.message }], res);
-            //     }
-            //   }
-            // } catch (error: any) {
-            //   internalServerError(
-            //     "Server Error",
-            //     [{ valid: false, data: error.message }],
-            //     res
-            //   );
-            // }
+            var _a;
+            try {
+                const { email, username, account_type, password, phone } = req.body;
+                const validCheck = yield validation_1.default.validRegisterAdmin(email, username, account_type, password, phone);
+                if (validCheck)
+                    (0, responseHandler_1.successResponse)(400, "Invalid Parameter", [{ valid: false }], res);
+                else {
+                    try {
+                        const imageUrl = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+                        let data = yield registerService_1.default.serviceRegisterAdmin(email, username, account_type, password, phone, imageUrl);
+                        (0, responseHandler_1.successResponse)(200, "success", [data], res);
+                    }
+                    catch (error) {
+                        (0, responseHandler_1.dbError)([{ valid: false, data: error.message }], res);
+                    }
+                }
+            }
+            catch (error) {
+                (0, responseHandler_1.internalServerError)("Server Error", [{ valid: false, data: error.message }], res);
+            }
         });
     }
 }

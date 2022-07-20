@@ -19,12 +19,13 @@ exports.default = new (class loginController {
     constructor() {
         this.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { username, password } = req.body;
-                const validCheck = yield validation_1.default.validLoginAdmin(username, password);
+                const { email, password } = req.body;
+                // console.log(email, password);
+                const validCheck = yield validation_1.default.validLoginAdmin(email, password);
                 if (validCheck)
                     return (0, responseHandler_1.successResponse)(400, "Invalid Parameter", [{ valid: false }], res);
                 try {
-                    const data = yield loginService_1.default.login(username, password);
+                    const data = yield loginService_1.default.login(email, password);
                     (0, responseHandler_1.successResponse)(200, "success", [data], res);
                 }
                 catch (error) {

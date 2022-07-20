@@ -13,26 +13,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const query_1 = __importDefault(require("../../dataAccess/SQL/register/query"));
+const helper_1 = require("../../lib/helpers/helper");
 exports.default = new (class registerService {
     constructor() {
-        this.serviceRegisterAdmin = (username, password) => __awaiter(this, void 0, void 0, function* () {
+        this.serviceRegisterAdmin = (email, username, account_type, password, phone, imageUrl) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let adminExist = yield query_1.default.isAdminExist(username);
+                let adminExist = yield query_1.default.isAdminExist(email);
+                console.log("Admin Exist", adminExist);
                 return !adminExist.length
-                    ? this.registerAdmin(username, password)
+                    ? this.registerAdmin(email, username, account_type, password, phone, imageUrl)
                     : {
                         valid: false,
                         username: username,
-                        message: "Username Already Exist",
+                        message: "User Already Exist",
                     };
             }
             catch (error) {
                 throw error;
             }
         });
-        this.registerAdmin = (username, password) => __awaiter(this, void 0, void 0, function* () {
+        this.registerAdmin = (email, username, account_type, password, phone, imageUrl) => __awaiter(this, void 0, void 0, function* () {
             try {
-                yield query_1.default.registerAdmin(username, password);
+                let account = 0;
+                if (account_type.toLowerCase() === "driver") {
+                    account = helper_1.User.Driver;
+                }
+                else if (account_type.toLowerCase() === "company") {
+                    account = helper_1.User.Company;
+                }
+                else if (account_type.toLowerCase() === "manager") {
+                    account = helper_1.User.Manager;
+                }
+                yield query_1.default.registerAdmin(email, username, account, password, phone, imageUrl);
                 return {
                     valid: true,
                     username: username,

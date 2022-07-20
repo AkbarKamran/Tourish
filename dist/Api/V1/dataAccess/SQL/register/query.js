@@ -18,7 +18,7 @@ exports.default = new (class loginQuery {
     constructor() {
         this.isAdminExist = (username) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let selectQuery = `SELECT u.email FROM dbo.neRegisterAdmin AS u where email = '${username}'`;
+                let selectQuery = `SELECT u.email FROM dbo.neRegisterUser AS u where email = '${username}'`;
                 const dbData = yield baseQuery_1.default.runQuery(selectQuery);
                 return dbData;
             }
@@ -26,13 +26,12 @@ exports.default = new (class loginQuery {
                 throw error;
             }
         });
-        this.registerAdmin = (username, password) => __awaiter(this, void 0, void 0, function* () {
+        this.registerAdmin = (email, username, account_type, password, phone, imageUrl) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let hashPassword = yield (0, hash_1.convertHash)(password);
-                console.log(username);
-                let insertQuery = `INSERT INTO dbo.neRegisterAdmin(email,password) VALUES('${username}', '${hashPassword}') SELECT SCOPE_IDENTITY() as id `;
+                console.log(email);
+                let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${hashPassword}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
                 let dbData = yield baseQuery_1.default.runQuery(insertQuery);
-                // console.log(dbData[0].id);
                 return dbData;
             }
             catch (error) {

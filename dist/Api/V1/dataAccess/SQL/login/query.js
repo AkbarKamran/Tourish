@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const baseQuery_1 = __importDefault(require("../common/baseQuery"));
 exports.default = new (class loginQuery {
     constructor() {
-        this.isAdminExist = (username) => __awaiter(this, void 0, void 0, function* () {
+        this.isAdminExist = (email) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let selectQuery = `SELECT u.email FROM dbo.neRegisterAdmin AS u where email = '${username}'`;
+                let selectQuery = `SELECT * FROM dbo.neRegisterUser where email = '${email}'`;
                 const dbData = yield baseQuery_1.default.runQuery(selectQuery);
                 return dbData;
             }
@@ -25,9 +25,9 @@ exports.default = new (class loginQuery {
                 throw error;
             }
         });
-        this.adminPasswordVerification = (username, password) => __awaiter(this, void 0, void 0, function* () {
+        this.adminPasswordVerification = (email, password) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const selectQuery = `SELECT isNull(u.password,'') as password FROM dbo.neRegisterAdmin AS u where email = '${username}'`;
+                const selectQuery = `SELECT u.password as password FROM dbo.neRegisterUser AS u where email = '${email}'`;
                 return (yield baseQuery_1.default.runQuery(selectQuery))[0]
                     .password;
             }
