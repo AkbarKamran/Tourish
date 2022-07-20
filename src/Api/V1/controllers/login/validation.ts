@@ -1,7 +1,7 @@
 export default new (class loginValidation {
-  validLoginAdmin = async (username: string, password: string) => {
-    return !!username &&
-      typeof username === "string" &&
+  validLoginAdmin = async (email: string, password: string) => {
+    return !!email &&
+      typeof email === "string" &&
       typeof password === "string" &&
       !!password
       ? false

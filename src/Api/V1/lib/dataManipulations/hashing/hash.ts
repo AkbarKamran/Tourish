@@ -6,7 +6,10 @@ let convertHash = async (password: string) => {
   return hashed;
 };
 let verifyHash = async (password: string, dbPassword: string) => {
-  return await bcrypt.compare(password, dbPassword);
+  //console.log(password, dbPassword);
+  if (password === dbPassword) {
+    return true;
+  }
+  return false;
 };
-
 export { convertHash, verifyHash };

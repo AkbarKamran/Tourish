@@ -1,8 +1,8 @@
 import baseQuery from "../common/baseQuery";
 export default new (class loginQuery {
-  isAdminExist = async (username: string) => {
+  isAdminExist = async (email: string) => {
     try {
-      let selectQuery = `SELECT u.email FROM dbo.neRegisterAdmin AS u where email = '${username}'`;
+      let selectQuery = `SELECT * FROM dbo.neRegisterUser where email = '${email}'`;
 
       const dbData = await baseQuery.runQuery(selectQuery);
 
@@ -11,9 +11,9 @@ export default new (class loginQuery {
       throw error;
     }
   };
-  adminPasswordVerification = async (username: string, password: string) => {
+  adminPasswordVerification = async (email: string, password: string) => {
     try {
-      const selectQuery = `SELECT isNull(u.password,'') as password FROM dbo.neRegisterAdmin AS u where email = '${username}'`;
+      const selectQuery = `SELECT u.password as password FROM dbo.neRegisterUser AS u where email = '${email}'`;
       return ((await baseQuery.runQuery(selectQuery)) as any)[0]
         .password as string;
     } catch (error) {

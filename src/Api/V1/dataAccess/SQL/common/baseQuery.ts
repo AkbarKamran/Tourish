@@ -10,7 +10,10 @@ export default new (class baseQuery {
             let req = pool.request();
             Object.entries(columns).length === 0
               ? req.query(query, (error: any, record: any) => {
-                  if (error) reject(error);
+                  if (error) {
+                    console.log("In error", error);
+                    reject(error);
+                  }
                   return resolve(record.recordsets[0]);
                 })
               : req.query(query, columns, (error: any, record: any) => {

@@ -6,7 +6,7 @@ import baseQuery from "../common/baseQuery";
 export default new (class loginQuery {
   isAdminExist = async (username: string) => {
     try {
-      let selectQuery = `SELECT u.email FROM dbo.neRegisterAdmin AS u where email = '${username}'`;
+      let selectQuery = `SELECT u.email FROM dbo.neRegisterUser AS u where email = '${username}'`;
 
       const dbData = await baseQuery.runQuery(selectQuery);
       return dbData;
@@ -14,15 +14,19 @@ export default new (class loginQuery {
       throw error;
     }
   };
-  registerAdmin = async (username: string, password: string) => {
+  registerAdmin = async (
+    email: string,
+    username: string,
+    account_type: number,
+    password: string,
+    phone: string,
+    imageUrl: string
+  ) => {
     try {
       let hashPassword = await convertHash(password);
-      console.log(username);
-
-      let insertQuery = `INSERT INTO dbo.neRegisterAdmin(email,password) VALUES('${username}', '${hashPassword}') SELECT SCOPE_IDENTITY() as id `;
-
+      console.log(email);
+      let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${hashPassword}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
       let dbData: any = await baseQuery.runQuery(insertQuery);
-      // console.log(dbData[0].id);
       return dbData;
     } catch (error) {
       throw error;

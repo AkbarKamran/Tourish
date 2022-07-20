@@ -4,4 +4,10 @@ let akbar = async (data: any) => {
     console.log(data);
   } else return;
 };
-export { akbar };
+
+enum User {
+  Driver = 1,
+  Company = 2,
+  Manager = 3,
+}
+export { akbar, User };
