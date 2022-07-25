@@ -8,7 +8,7 @@ const uploadImage = async (url: any, filename: any) => {
   return new Promise((resolve, reject) => {
     cloudinary.config(config);
     cloudinary.uploader
-      .upload(url)
+      .upload(path.join(__dirname, `/uploadProfile/${filename}`))
       .then((result: any) => {
         // console.log(__dirname);
         // fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
