@@ -6,6 +6,7 @@ import {
   internalServerError,
   successResponse,
 } from "../../lib/helpers/response/responseHandler";
+import uploadImage from "../../lib/helpers/ImageUpload/upload";
 
 export class loginController {
   registerAdmin = async (req: Request, res: Response) => {
@@ -23,15 +24,16 @@ export class loginController {
       else {
         try {
           const imageUrl: any = req.file?.path;
+          const cloudImageUrl: any = await uploadImage(imageUrl);
           let data = await registerService.serviceRegisterAdmin(
             email,
             username,
             account_type,
             password,
             phone,
-            imageUrl
+            cloudImageUrl.url
           );
-          successResponse(200, "success", [data], res);
+          successResponse(200, "success", data, res);
         } catch (error: any) {
           dbError([{ valid: false, data: error.message }], res);
         }

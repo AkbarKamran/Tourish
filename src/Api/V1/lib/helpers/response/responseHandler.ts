@@ -5,7 +5,7 @@ function successResponse(code: any, message: string, data: any, res: any) {
       status: true,
       message: message,
     },
-    body: data,
+    data: data,
   });
 }
 

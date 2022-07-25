@@ -1,5 +1,10 @@
 import loginQuery from "../../dataAccess/SQL/register/query";
 import { User } from "../../lib/helpers/helper";
+import { createToken } from "../../middleware/middleware";
+import {
+  convertHash,
+  verifyHash,
+} from "../../lib/dataManipulations/hashing/hash";
 export default new (class registerService {
   serviceRegisterAdmin = async (
     email: string,
@@ -11,8 +16,6 @@ export default new (class registerService {
   ) => {
     try {
       let adminExist: any = await loginQuery.isAdminExist(email);
-      console.log("Admin Exist", adminExist);
-
       return !adminExist.length
         ? this.registerAdmin(
             email,
@@ -24,8 +27,8 @@ export default new (class registerService {
           )
         : {
             valid: false,
-            username: username,
-            message: "User Already Exist",
+            email: email,
+            message: "Email Already Exist",
           };
     } catch (error) {
       throw error;
@@ -48,18 +51,20 @@ export default new (class registerService {
       } else if (account_type.toLowerCase() === "manager") {
         account = User.Manager;
       }
-      await loginQuery.registerAdmin(
+      let hashPassword = await convertHash(password);
+      let result = await loginQuery.registerAdmin(
         email,
         username,
         account,
-        password,
+        hashPassword,
         phone,
         imageUrl
       );
+      const token = await createToken(email);
       return {
         valid: true,
-        username: username,
-        message: "Username Registered",
+        token: token,
+        data: result,
       };
     } catch (error) {
       throw error;

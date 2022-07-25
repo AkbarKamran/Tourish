@@ -23,10 +23,11 @@ export default new (class loginQuery {
     imageUrl: string
   ) => {
     try {
-      let hashPassword = await convertHash(password);
-      console.log(email);
-      let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${hashPassword}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
-      let dbData: any = await baseQuery.runQuery(insertQuery);
+      let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
+      let id: any = await baseQuery.runQuery(insertQuery);
+      let dbData = await baseQuery.runQuery(
+        `SELECT  profile_image,phone,email, username,account_type from dbo.neRegisterUser where id = ${id[0].id}`
+      );
       return dbData;
     } catch (error) {
       throw error;
