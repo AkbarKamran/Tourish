@@ -21,7 +21,7 @@ const uploadImage = (url, filename) => __awaiter(void 0, void 0, void 0, functio
             .upload(path.join(__dirname, `/uploadProfile/${filename}`))
             .then((result) => {
             // console.log(__dirname);
-            // fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
+            fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
             resolve(result);
         })
             .catch((error) => {

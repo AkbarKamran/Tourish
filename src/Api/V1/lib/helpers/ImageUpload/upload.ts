@@ -16,7 +16,7 @@ const uploadImage = async (url: any, filename: any) => {
       .upload(path.join(__dirname, `/uploadProfile/${filename}`))
       .then((result: any) => {
         // console.log(__dirname);
-        // fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
+        fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
         resolve(result);
       })
       .catch((error: any) => {
