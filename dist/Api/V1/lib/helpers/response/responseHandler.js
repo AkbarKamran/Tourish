@@ -8,7 +8,7 @@ function successResponse(code, message, data, res) {
             status: true,
             message: message,
         },
-        body: data,
+        data: data,
     });
 }
 exports.successResponse = successResponse;

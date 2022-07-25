@@ -16,6 +16,7 @@ exports.loginController = void 0;
 const validation_1 = __importDefault(require("./validation"));
 const registerService_1 = __importDefault(require("../../services/register/registerService"));
 const responseHandler_1 = require("../../lib/helpers/response/responseHandler");
+const upload_1 = __importDefault(require("../../lib/helpers/ImageUpload/upload"));
 class loginController {
     constructor() {
         this.registerAdmin = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -28,8 +29,9 @@ class loginController {
                 else {
                     try {
                         const imageUrl = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
-                        let data = yield registerService_1.default.serviceRegisterAdmin(email, username, account_type, password, phone, imageUrl);
-                        (0, responseHandler_1.successResponse)(200, "success", [data], res);
+                        const cloudImageUrl = yield (0, upload_1.default)(imageUrl);
+                        let data = yield registerService_1.default.serviceRegisterAdmin(email, username, account_type, password, phone, cloudImageUrl.url);
+                        (0, responseHandler_1.successResponse)(200, "success", data, res);
                     }
                     catch (error) {
                         (0, responseHandler_1.dbError)([{ valid: false, data: error.message }], res);

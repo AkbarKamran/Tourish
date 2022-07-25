@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const hash_1 = require("../../../lib/dataManipulations/hashing/hash");
 const baseQuery_1 = __importDefault(require("../common/baseQuery"));
 exports.default = new (class loginQuery {
     constructor() {
@@ -28,10 +27,9 @@ exports.default = new (class loginQuery {
         });
         this.registerAdmin = (email, username, account_type, password, phone, imageUrl) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let hashPassword = yield (0, hash_1.convertHash)(password);
-                console.log(email);
-                let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${hashPassword}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
-                let dbData = yield baseQuery_1.default.runQuery(insertQuery);
+                let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
+                let id = yield baseQuery_1.default.runQuery(insertQuery);
+                let dbData = yield baseQuery_1.default.runQuery(`SELECT  profile_image,phone,email, username,account_type from dbo.neRegisterUser where id = ${id[0].id}`);
                 return dbData;
             }
             catch (error) {

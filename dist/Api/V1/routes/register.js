@@ -6,38 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const register_1 = require("../controllers/register/register");
 let registerLogin = new register_1.loginController();
-const multer_1 = __importDefault(require("multer"));
-const path = require("path");
-// var storage = multer.diskStorage({
-//   destination: function (req: any, file: any, cb: any) {
-//     cb(null, "../../../public/profile");
-//   },
-//   filename: function (req: any, file: any, cb: any) {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
-// var upload = multer({ storage: storage });
+const multer_1 = __importDefault(require("../lib/helpers/ImageUpload/multer"));
 const router = (0, express_1.Router)();
-const storage = multer_1.default.diskStorage({
-    destination: function (req, file, cb) {
-        console.log(__dirname);
-        cb(null, path.join(__dirname, "/uploads/"));
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
-    },
-});
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === "image/jpg" ||
-        file.mimetype === "image/jpeg" ||
-        file.mimetype === "image/png") {
-        cb(null, true);
-    }
-    else {
-        cb(new Error("Image uploaded is not of type jpg/jpeg or png"), false);
-    }
-};
-const upload = (0, multer_1.default)({ storage: storage, fileFilter: fileFilter });
-router.post("/register", upload.single("profile_image"), registerLogin.registerAdmin);
+router.post("/register", multer_1.default.single("profile_image"), registerLogin.registerAdmin);
 exports.default = router;
 //# sourceMappingURL=register.js.map

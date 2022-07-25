@@ -14,18 +14,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const query_1 = __importDefault(require("../../dataAccess/SQL/register/query"));
 const helper_1 = require("../../lib/helpers/helper");
+const middleware_1 = require("../../middleware/middleware");
+const hash_1 = require("../../lib/dataManipulations/hashing/hash");
 exports.default = new (class registerService {
     constructor() {
         this.serviceRegisterAdmin = (email, username, account_type, password, phone, imageUrl) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let adminExist = yield query_1.default.isAdminExist(email);
-                console.log("Admin Exist", adminExist);
                 return !adminExist.length
                     ? this.registerAdmin(email, username, account_type, password, phone, imageUrl)
                     : {
                         valid: false,
-                        username: username,
-                        message: "User Already Exist",
+                        email: email,
+                        message: "Email Already Exist",
                     };
             }
             catch (error) {
@@ -44,11 +45,13 @@ exports.default = new (class registerService {
                 else if (account_type.toLowerCase() === "manager") {
                     account = helper_1.User.Manager;
                 }
-                yield query_1.default.registerAdmin(email, username, account, password, phone, imageUrl);
+                let hashPassword = yield (0, hash_1.convertHash)(password);
+                let result = yield query_1.default.registerAdmin(email, username, account, hashPassword, phone, imageUrl);
+                const token = yield (0, middleware_1.createToken)(email);
                 return {
                     valid: true,
-                    username: username,
-                    message: "Username Registered",
+                    token: token,
+                    data: result,
                 };
             }
             catch (error) {
