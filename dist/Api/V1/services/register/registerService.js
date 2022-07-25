@@ -45,6 +45,9 @@ exports.default = new (class registerService {
                 else if (account_type.toLowerCase() === "manager") {
                     account = helper_1.User.Manager;
                 }
+                else if (account_type.toLowerCase() === "user") {
+                    account = helper_1.User.User;
+                }
                 let hashPassword = yield (0, hash_1.convertHash)(password);
                 let result = yield query_1.default.registerAdmin(email, username, account, hashPassword, phone, imageUrl);
                 const token = yield (0, middleware_1.createToken)(email);

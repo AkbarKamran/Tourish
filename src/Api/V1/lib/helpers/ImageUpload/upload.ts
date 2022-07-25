@@ -4,7 +4,7 @@ const path = require("path");
 
 const config = require("./config.json");
 
-const uploadImage = async (url: any, filename: any) => {
+const uploadImageToCloud = async (url: any, filename: any) => {
   return new Promise((resolve, reject) => {
     cloudinary.config(config);
     console.log(
@@ -26,4 +26,4 @@ const uploadImage = async (url: any, filename: any) => {
   });
 };
 
-export default uploadImage;
+export default uploadImageToCloud;

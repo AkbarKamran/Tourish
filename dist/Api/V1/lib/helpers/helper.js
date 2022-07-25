@@ -24,6 +24,7 @@ var User;
     User[User["Driver"] = 1] = "Driver";
     User[User["Company"] = 2] = "Company";
     User[User["Manager"] = 3] = "Manager";
+    User[User["User"] = 4] = "User";
 })(User || (User = {}));
 exports.User = User;
 //# sourceMappingURL=helper.js.map

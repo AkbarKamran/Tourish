@@ -13,7 +13,7 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const path = require("path");
 const config = require("./config.json");
-const uploadImage = (url, filename) => __awaiter(void 0, void 0, void 0, function* () {
+const uploadImageToCloud = (url, filename) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         cloudinary.config(config);
         console.log("This is path pof image", path.join(__dirname, `/uploadProfile/${filename}`));
@@ -30,5 +30,5 @@ const uploadImage = (url, filename) => __awaiter(void 0, void 0, void 0, functio
         });
     });
 });
-exports.default = uploadImage;
+exports.default = uploadImageToCloud;
 //# sourceMappingURL=upload.js.map

@@ -50,6 +50,8 @@ export default new (class registerService {
         account = User.Company;
       } else if (account_type.toLowerCase() === "manager") {
         account = User.Manager;
+      } else if (account_type.toLowerCase() === "user") {
+        account = User.User;
       }
       let hashPassword = await convertHash(password);
       let result = await loginQuery.registerAdmin(

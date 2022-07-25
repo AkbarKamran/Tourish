@@ -6,7 +6,7 @@ import baseQuery from "../common/baseQuery";
 export default new (class loginQuery {
   isAdminExist = async (username: string) => {
     try {
-      let selectQuery = `SELECT u.email FROM dbo.neRegisterUser AS u where email = '${username}'`;
+      let selectQuery = `SELECT u.email FROM dbo.neRegister AS u where email = '${username}'`;
 
       const dbData = await baseQuery.runQuery(selectQuery);
       return dbData;
@@ -23,10 +23,10 @@ export default new (class loginQuery {
     imageUrl: string
   ) => {
     try {
-      let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
+      let insertQuery = `INSERT INTO dbo.neRegister(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
       let id: any = await baseQuery.runQuery(insertQuery);
       let dbData = await baseQuery.runQuery(
-        `SELECT  profile_image,phone,email, username,account_type from dbo.neRegisterUser where id = ${id[0].id}`
+        `SELECT  profile_image,phone,email, username,account_type from dbo.neRegister where id = ${id[0].id}`
       );
       return dbData;
     } catch (error) {

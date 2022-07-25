@@ -9,5 +9,6 @@ enum User {
   Driver = 1,
   Company = 2,
   Manager = 3,
+  User = 4,
 }
 export { akbar, User };

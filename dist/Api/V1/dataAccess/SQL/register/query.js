@@ -17,7 +17,7 @@ exports.default = new (class loginQuery {
     constructor() {
         this.isAdminExist = (username) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let selectQuery = `SELECT u.email FROM dbo.neRegisterUser AS u where email = '${username}'`;
+                let selectQuery = `SELECT u.email FROM dbo.neRegister AS u where email = '${username}'`;
                 const dbData = yield baseQuery_1.default.runQuery(selectQuery);
                 return dbData;
             }
@@ -27,9 +27,9 @@ exports.default = new (class loginQuery {
         });
         this.registerAdmin = (email, username, account_type, password, phone, imageUrl) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let insertQuery = `INSERT INTO dbo.neRegisterUser(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
+                let insertQuery = `INSERT INTO dbo.neRegister(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
                 let id = yield baseQuery_1.default.runQuery(insertQuery);
-                let dbData = yield baseQuery_1.default.runQuery(`SELECT  profile_image,phone,email, username,account_type from dbo.neRegisterUser where id = ${id[0].id}`);
+                let dbData = yield baseQuery_1.default.runQuery(`SELECT  profile_image,phone,email, username,account_type from dbo.neRegister where id = ${id[0].id}`);
                 return dbData;
             }
             catch (error) {

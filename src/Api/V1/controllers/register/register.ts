@@ -6,7 +6,7 @@ import {
   internalServerError,
   successResponse,
 } from "../../lib/helpers/response/responseHandler";
-import uploadImage from "../../lib/helpers/ImageUpload/upload";
+import uploadImageToCloud from "../../lib/helpers/ImageUpload/upload";
 
 export class loginController {
   registerAdmin = async (req: Request, res: Response) => {
@@ -24,7 +24,7 @@ export class loginController {
       else {
         try {
           const imageUrl: any = req.file?.path;
-          const cloudImageUrl: any = await uploadImage(
+          const cloudImageUrl: any = await uploadImageToCloud(
             imageUrl,
             req.file?.filename
           );
