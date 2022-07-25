@@ -41,11 +41,9 @@ let convertHash = (password) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.convertHash = convertHash;
 let verifyHash = (password, dbPassword) => __awaiter(void 0, void 0, void 0, function* () {
-    //console.log(password, dbPassword);
-    if (password === dbPassword) {
-        return true;
-    }
-    return false;
+    console.log(password, dbPassword);
+    const verified = bcrypt.compareSync(password, dbPassword);
+    return verified;
 });
 exports.verifyHash = verifyHash;
 //# sourceMappingURL=hash.js.map

@@ -21,41 +21,39 @@ exports.default = new (class loginService {
             try {
                 const adminExist = yield query_1.default.isAdminExist(email);
                 return adminExist.length
-                    ? this.adminExists(adminExist)
+                    ? this.adminExists(adminExist, password)
                     : {
                         valid: false,
-                        username: "",
                         token: "",
-                        message: "please enter the valid email!",
+                        message: "Please enter the valid email!",
                     };
             }
             catch (error) {
                 throw error;
             }
         });
-        this.adminExists = (UserExists) => __awaiter(this, void 0, void 0, function* () {
+        this.adminExists = (UserExists, password) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const dbHash = yield query_1.default.adminPasswordVerification(UserExists[0].email, UserExists[0].password);
-                return this.verifyPassword(UserExists, dbHash);
+                return this.verifyPassword(UserExists, password, dbHash);
             }
             catch (error) {
                 throw error;
             }
         });
-        this.verifyPassword = (UserExists, dbHash) => __awaiter(this, void 0, void 0, function* () {
+        this.verifyPassword = (UserExists, password, dbHash) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let res = yield (0, hash_1.verifyHash)(UserExists[0].password, dbHash);
-                // console.log(res);
-                if (yield (0, hash_1.verifyHash)(UserExists[0].password, dbHash)) {
-                    //console.log("In Suceess");
+                if (yield (0, hash_1.verifyHash)(password, dbHash)) {
                     const token = yield (0, middleware_1.createToken)(UserExists[0].email);
                     let data = {
-                        id: UserExists[0].ID,
                         valid: true,
-                        email: UserExists[0].email,
-                        profile_image: UserExists[0].profile_image,
                         token: token,
-                        message: "welcome",
+                        id: UserExists[0].ID,
+                        email: UserExists[0].email,
+                        username: UserExists[0].username,
+                        account_type: UserExists[0].account_type,
+                        phone: UserExists[0].phone,
+                        profile_image: UserExists[0].profile_image,
                     };
                     return data;
                 }

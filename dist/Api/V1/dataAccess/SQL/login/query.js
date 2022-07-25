@@ -17,7 +17,7 @@ exports.default = new (class loginQuery {
     constructor() {
         this.isAdminExist = (email) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let selectQuery = `SELECT * FROM dbo.neRegisterUser where email = '${email}'`;
+                let selectQuery = `SELECT * FROM dbo.neRegister where email = '${email}'`;
                 const dbData = yield baseQuery_1.default.runQuery(selectQuery);
                 return dbData;
             }
@@ -27,7 +27,7 @@ exports.default = new (class loginQuery {
         });
         this.adminPasswordVerification = (email, password) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const selectQuery = `SELECT u.password as password FROM dbo.neRegisterUser AS u where email = '${email}'`;
+                const selectQuery = `SELECT u.password as password FROM dbo.neRegister AS u where email = '${email}'`;
                 return (yield baseQuery_1.default.runQuery(selectQuery))[0]
                     .password;
             }

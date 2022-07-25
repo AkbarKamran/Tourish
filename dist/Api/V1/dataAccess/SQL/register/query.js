@@ -29,7 +29,7 @@ exports.default = new (class loginQuery {
             try {
                 let insertQuery = `INSERT INTO dbo.neRegister(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
                 let id = yield baseQuery_1.default.runQuery(insertQuery);
-                let dbData = yield baseQuery_1.default.runQuery(`SELECT  profile_image,phone,email, username,account_type from dbo.neRegister where id = ${id[0].id}`);
+                let dbData = yield baseQuery_1.default.runQuery(`SELECT id, profile_image,phone,email, username,account_type from dbo.neRegister where id = ${id[0].id}`);
                 return dbData;
             }
             catch (error) {

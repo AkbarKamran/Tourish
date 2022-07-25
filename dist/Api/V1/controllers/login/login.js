@@ -26,7 +26,7 @@ exports.default = new (class loginController {
                     return (0, responseHandler_1.successResponse)(400, "Invalid Parameter", [{ valid: false }], res);
                 try {
                     const data = yield loginService_1.default.login(email, password);
-                    (0, responseHandler_1.successResponse)(200, "success", [data], res);
+                    (0, responseHandler_1.successResponse)(200, "success", data, res);
                 }
                 catch (error) {
                     (0, responseHandler_1.dbError)([{ valid: false, data: error.message }], res);

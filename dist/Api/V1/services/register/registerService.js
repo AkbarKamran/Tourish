@@ -51,11 +51,17 @@ exports.default = new (class registerService {
                 let hashPassword = yield (0, hash_1.convertHash)(password);
                 let result = yield query_1.default.registerAdmin(email, username, account, hashPassword, phone, imageUrl);
                 const token = yield (0, middleware_1.createToken)(email);
-                return {
+                let data = {
                     valid: true,
                     token: token,
-                    data: result,
+                    id: result[0].id,
+                    email: result[0].email,
+                    username: result[0].username,
+                    account_type: result[0].account_type,
+                    phone: result[0].phone,
+                    profile_image: result[0].profile_image,
                 };
+                return data;
             }
             catch (error) {
                 throw error;
