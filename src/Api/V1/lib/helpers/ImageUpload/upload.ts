@@ -10,8 +10,8 @@ const uploadImage = async (url: any, filename: any) => {
     cloudinary.uploader
       .upload(url)
       .then((result: any) => {
-        console.log(__dirname);
-        fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
+        // console.log(__dirname);
+        // fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
         resolve(result);
       })
       .catch((error: any) => {

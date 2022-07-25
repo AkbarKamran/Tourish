@@ -19,7 +19,8 @@ const uploadImage = (url, filename) => __awaiter(void 0, void 0, void 0, functio
         cloudinary.uploader
             .upload(url)
             .then((result) => {
-            fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
+            // console.log(__dirname);
+            // fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
             resolve(result);
         })
             .catch((error) => {
