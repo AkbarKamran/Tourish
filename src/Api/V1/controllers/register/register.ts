@@ -24,7 +24,10 @@ export class loginController {
       else {
         try {
           const imageUrl: any = req.file?.path;
-          const cloudImageUrl: any = await uploadImage(imageUrl);
+          const cloudImageUrl: any = await uploadImage(
+            imageUrl,
+            req.file?.filename
+          );
           let data = await registerService.serviceRegisterAdmin(
             email,
             username,

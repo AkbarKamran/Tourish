@@ -11,14 +11,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
+const path = require("path");
 const config = require("./config.json");
-const uploadImage = (url) => __awaiter(void 0, void 0, void 0, function* () {
+const uploadImage = (url, filename) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         cloudinary.config(config);
         cloudinary.uploader
             .upload(url)
             .then((result) => {
-            fs.unlinkSync(url);
+            fs.unlinkSync(path.join(__dirname, `/uploadProfile/${filename}`));
             resolve(result);
         })
             .catch((error) => {

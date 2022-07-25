@@ -12,8 +12,12 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const imageUrl: any = req.file?.path;
+
       // console.log("This is image File Path in Server", imageUrl);
-      const cloudinaryImageUrl = await uploadImage(imageUrl);
+      const cloudinaryImageUrl = await uploadImage(
+        imageUrl,
+        req.file?.filename
+      );
       // console.log("This is cloud Url", JSON.stringify(cloudinaryImageUrl));
 
       res.status(200).json({ status: "success", data: cloudinaryImageUrl });

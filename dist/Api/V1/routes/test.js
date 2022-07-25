@@ -20,11 +20,11 @@ router.get("/test", (req, res) => {
     res.status(200).json({ status: "success", message: "Welcome to Tourish" });
 });
 router.post("/image", multer_1.default.single("profile_image"), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b;
     try {
         const imageUrl = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
         // console.log("This is image File Path in Server", imageUrl);
-        const cloudinaryImageUrl = yield (0, upload_1.default)(imageUrl);
+        const cloudinaryImageUrl = yield (0, upload_1.default)(imageUrl, (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename);
         // console.log("This is cloud Url", JSON.stringify(cloudinaryImageUrl));
         res.status(200).json({ status: "success", data: cloudinaryImageUrl });
     }

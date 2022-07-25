@@ -20,7 +20,7 @@ const upload_1 = __importDefault(require("../../lib/helpers/ImageUpload/upload")
 class loginController {
     constructor() {
         this.registerAdmin = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
+            var _a, _b;
             try {
                 const { email, username, account_type, password, phone } = req.body;
                 const validCheck = yield validation_1.default.validRegisterAdmin(email, username, account_type, password, phone);
@@ -29,7 +29,7 @@ class loginController {
                 else {
                     try {
                         const imageUrl = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
-                        const cloudImageUrl = yield (0, upload_1.default)(imageUrl);
+                        const cloudImageUrl = yield (0, upload_1.default)(imageUrl, (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename);
                         let data = yield registerService_1.default.serviceRegisterAdmin(email, username, account_type, password, phone, cloudImageUrl.url);
                         (0, responseHandler_1.successResponse)(200, "success", data, res);
                     }
