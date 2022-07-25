@@ -7,44 +7,44 @@ export default new (class loginService {
       const adminExist: any = await loginQuery.isAdminExist(email);
 
       return adminExist.length
-        ? this.adminExists(adminExist)
+        ? this.adminExists(adminExist, password)
         : {
             valid: false,
-            username: "",
             token: "",
-            message: "please enter the valid email!",
+            message: "Please enter the valid email!",
           };
     } catch (error) {
       throw error;
     }
   };
-  private adminExists = async (UserExists: any) => {
+  private adminExists = async (UserExists: any, password: string) => {
     try {
       const dbHash: any = await loginQuery.adminPasswordVerification(
         UserExists[0].email,
         UserExists[0].password
       );
-      return this.verifyPassword(UserExists, dbHash);
+      return this.verifyPassword(UserExists, password, dbHash);
     } catch (error) {
       throw error;
     }
   };
-  private verifyPassword = async (UserExists: any, dbHash: string) => {
+  private verifyPassword = async (
+    UserExists: any,
+    password: string,
+    dbHash: string
+  ) => {
     try {
-      let res = await verifyHash(UserExists[0].password, dbHash);
-      // console.log(res);
-
-      if (await verifyHash(UserExists[0].password, dbHash)) {
-        //console.log("In Suceess");
-
+      if (await verifyHash(password, dbHash)) {
         const token = await createToken(UserExists[0].email);
         let data = {
-          id: UserExists[0].ID,
           valid: true,
-          email: UserExists[0].email,
-          profile_image: UserExists[0].profile_image,
           token: token,
-          message: "welcome",
+          id: UserExists[0].ID,
+          email: UserExists[0].email,
+          username: UserExists[0].username,
+          account_type: UserExists[0].account_type,
+          phone: UserExists[0].phone,
+          profile_image: UserExists[0].profile_image,
         };
         return data;
       } else {

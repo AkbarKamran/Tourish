@@ -23,7 +23,7 @@ export default new (class loginController {
         );
       try {
         const data = await loginService.login(email, password);
-        successResponse(200, "success", [data], res);
+        successResponse(200, "success", data, res);
       } catch (error: any) {
         dbError([{ valid: false, data: error.message }], res);
       }

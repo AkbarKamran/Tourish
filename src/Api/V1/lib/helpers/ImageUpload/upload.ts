@@ -7,10 +7,6 @@ const config = require("./config.json");
 const uploadImageToCloud = async (url: any, filename: any) => {
   return new Promise((resolve, reject) => {
     cloudinary.config(config);
-    console.log(
-      "This is path pof image",
-      path.join(__dirname, `/uploadProfile/${filename}`)
-    );
 
     cloudinary.uploader
       .upload(path.join(__dirname, `/uploadProfile/${filename}`))

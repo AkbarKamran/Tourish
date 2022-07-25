@@ -26,7 +26,7 @@ export default new (class loginQuery {
       let insertQuery = `INSERT INTO dbo.neRegister(email,username,account_type,password,phone,profile_image) VALUES('${email}','${username}',${account_type}, '${password}','${phone}','${imageUrl}') SELECT SCOPE_IDENTITY() as id `;
       let id: any = await baseQuery.runQuery(insertQuery);
       let dbData = await baseQuery.runQuery(
-        `SELECT  profile_image,phone,email, username,account_type from dbo.neRegister where id = ${id[0].id}`
+        `SELECT id, profile_image,phone,email, username,account_type from dbo.neRegister where id = ${id[0].id}`
       );
       return dbData;
     } catch (error) {

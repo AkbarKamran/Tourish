@@ -54,7 +54,7 @@ export default new (class registerService {
         account = User.User;
       }
       let hashPassword = await convertHash(password);
-      let result = await loginQuery.registerAdmin(
+      let result: any = await loginQuery.registerAdmin(
         email,
         username,
         account,
@@ -63,11 +63,17 @@ export default new (class registerService {
         imageUrl
       );
       const token = await createToken(email);
-      return {
+      let data = {
         valid: true,
         token: token,
-        data: result,
+        id: result[0].id,
+        email: result[0].email,
+        username: result[0].username,
+        account_type: result[0].account_type,
+        phone: result[0].phone,
+        profile_image: result[0].profile_image,
       };
+      return data;
     } catch (error) {
       throw error;
     }
