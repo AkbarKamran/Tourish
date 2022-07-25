@@ -19,7 +19,7 @@ function internalServerError(message, err, res) {
             status: true,
             message: message,
         },
-        body: err,
+        data: err,
     });
 }
 exports.internalServerError = internalServerError;
@@ -30,7 +30,7 @@ function dbError(err, res) {
             status: true,
             message: "sql_Db Error",
         },
-        body: err,
+        data: err,
     });
 }
 exports.dbError = dbError;

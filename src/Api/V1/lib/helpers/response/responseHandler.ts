@@ -16,7 +16,7 @@ function internalServerError(message: String, err: any, res: any) {
       status: true,
       message: message,
     },
-    body: err,
+    data: err,
   });
 }
 
@@ -27,7 +27,7 @@ function dbError(err: any, res: any) {
       status: true,
       message: "sql_Db Error",
     },
-    body: err,
+    data: err,
   });
 }
 
