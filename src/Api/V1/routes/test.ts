@@ -27,5 +27,23 @@ router.post(
     }
   }
 );
+router.get("/genderChecker", async (req: Request, res: Response) => {
+  const name = req.query.name;
+  const axios = require("axios");
+  const options = {
+    method: "GET",
+    url: `https://api.genderize.io/?name=${name}`,
+  };
+
+  axios
+    .request(options)
+    .then(function (response: any) {
+      res.json(response.data);
+    })
+    .catch(function (error: any) {
+      console.error(error);
+      res.send(error);
+    });
+});
 
 export default router;

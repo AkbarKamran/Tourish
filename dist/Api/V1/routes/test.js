@@ -33,5 +33,22 @@ router.post("/image", multer_1.default.single("profile_image"), (req, res) => __
         res.status(500).json({ status: "error", data: error });
     }
 }));
+router.get("/genderChecker", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const name = req.query.name;
+    const axios = require("axios");
+    const options = {
+        method: "GET",
+        url: `https://api.genderize.io/?name=${name}`,
+    };
+    axios
+        .request(options)
+        .then(function (response) {
+        res.json(response.data);
+    })
+        .catch(function (error) {
+        console.error(error);
+        res.send(error);
+    });
+}));
 exports.default = router;
 //# sourceMappingURL=test.js.map

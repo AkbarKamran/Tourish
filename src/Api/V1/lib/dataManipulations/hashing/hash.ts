@@ -6,7 +6,6 @@ let convertHash = async (password: string) => {
   return hashed;
 };
 let verifyHash = async (password: string, dbPassword: string) => {
-  console.log(password, dbPassword);
   const verified = bcrypt.compareSync(password, dbPassword);
 
   return verified;
