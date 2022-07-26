@@ -38,7 +38,7 @@ router.get("/genderChecker", async (req: Request, res: Response) => {
   axios
     .request(options)
     .then(function (response: any) {
-      res.json(response.data);
+      res.json({ message: "Thanks Muhammad Akbar :)", data: response.data });
     })
     .catch(function (error: any) {
       console.error(error);
