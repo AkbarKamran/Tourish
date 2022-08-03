@@ -64,6 +64,7 @@ export default new (class Tour {
         );
         if (saveDetails) {
           const data = {
+            id: saveDetails,
             account_type: account_type,
             tour_date: tour_date,
             tour_destination: tour_destination,

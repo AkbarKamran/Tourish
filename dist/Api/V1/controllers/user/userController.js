@@ -45,6 +45,7 @@ exports.default = new (class Tour {
                     const saveDetails = yield userService_1.default.saveTourDetails(account_type, tour_date, tour_destination, tour_departure, bus_name, bus_number, busImagesDetails, tourImagesDetails);
                     if (saveDetails) {
                         const data = {
+                            id: saveDetails,
                             account_type: account_type,
                             tour_date: tour_date,
                             tour_destination: tour_destination,
