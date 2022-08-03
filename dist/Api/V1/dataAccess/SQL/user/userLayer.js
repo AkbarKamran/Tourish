@@ -13,18 +13,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const baseQuery_1 = __importDefault(require("../common/baseQuery"));
-const helper_1 = require("../../../lib/helpers/helper");
-exports.default = new (class getUserFromDb {
+exports.default = new (class TourDbLayer {
     constructor() {
-        this.user = (type) => __awaiter(this, void 0, void 0, function* () {
+        this.saveTourDetails = (account_type, tour_date, tour_destination, tour_departure, bus_name, bus_number, busImagesDetails, tourImagesDetails) => __awaiter(this, void 0, void 0, function* () {
             try {
-                if (!type) {
-                    const query = `select COUNT(username) as totalNeeoUser from dbo.neUserExtension`;
-                    const allUser = yield baseQuery_1.default.runQuery(query);
-                    (0, helper_1.akbar)(allUser);
-                    (0, helper_1.akbar)("abdul Rehman");
-                    return allUser[0].totalNeeoUser;
+                const saveDetailsQuery = `INSERT INTO dbo.neTour(tour_destination,tour_date,tour_departure,bus_name,bus_number,account_type) VALUES('${tour_destination}','${tour_date}','${tour_departure}','${bus_name}','${bus_number}',${account_type}) SELECT SCOPE_IDENTITY() as id`;
+                const tourId = yield baseQuery_1.default.runQuery(saveDetailsQuery);
+                // console.log(tourId[0].id);
+                for (const image of busImagesDetails) {
+                    const busQuery = `INSERT INTO dbo.neBusImages(tourId,busImages) VALUES (${tourId[0].id},'${image}')`;
+                    yield baseQuery_1.default.runQuery(busQuery);
                 }
+                for (const image of tourImagesDetails) {
+                    const busQuery = `INSERT INTO dbo.neTourImages(tourId,tourImages) VALUES (${tourId[0].id},'${image}')`;
+                    yield baseQuery_1.default.runQuery(busQuery);
+                }
+                return tourId[0].id;
+                // if (!type) {
+                //   const query = `select COUNT(username) as totalNeeoUser from dbo.neUserExtension`;
+                //   const allUser: any = await baseQuery.runQuery(query);
+                //   akbar(allUser);
+                //   akbar("abdul Rehman");
+                //   return allUser[0].totalNeeoUser;
+                // }
             }
             catch (error) {
                 throw error;

@@ -5,8 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const userController_1 = __importDefault(require("../controllers/user/userController"));
-const middleware_1 = require("../middleware/middleware");
+const multer_1 = __importDefault(require("../lib/helpers/ImageUpload/multer"));
 const router = (0, express_1.Router)();
-router.get("/user", middleware_1.authenticateToken, userController_1.default.getUser);
+router.post("/tour", 
+// authenticateToken,
+//   uploadMulter.array("bus_images"),
+multer_1.default.fields([
+    {
+        name: "bus_images",
+    },
+    {
+        name: "tour_images",
+    },
+]), userController_1.default.getTourDetails);
 exports.default = router;
 //# sourceMappingURL=user.js.map

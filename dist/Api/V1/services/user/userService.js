@@ -13,17 +13,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userLayer_1 = __importDefault(require("../../dataAccess/SQL/user/userLayer"));
-exports.default = new (class userMobile {
+const helper_1 = require("../../lib/helpers/helper");
+exports.default = new (class TourService {
     constructor() {
-        this.getUser = (type) => __awaiter(this, void 0, void 0, function* () {
+        this.saveTourDetails = (account_type, tour_date, tour_destination, tour_departure, bus_name, bus_number, busImagesDetails, tourImagesDetails) => __awaiter(this, void 0, void 0, function* () {
             try {
-                if (!type) {
-                    const userData = yield userLayer_1.default.user();
-                    return userData;
+                let account = 0;
+                if (account_type.toLowerCase() === "driver") {
+                    account = helper_1.User.Driver;
                 }
-                else {
-                    return { androidUser: "Android Ios User" };
+                else if (account_type.toLowerCase() === "company") {
+                    account = helper_1.User.Company;
                 }
+                else if (account_type.toLowerCase() === "manager") {
+                    account = helper_1.User.Manager;
+                }
+                else if (account_type.toLowerCase() === "user") {
+                    account = helper_1.User.User;
+                }
+                const tourData = yield userLayer_1.default.saveTourDetails(account, tour_date, tour_destination, tour_departure, bus_name, bus_number, busImagesDetails, tourImagesDetails);
+                return tourData;
+                // if (!type) {
+                //   const userData = await getUserFromDb.user();
+                //   return userData;
+                // } else {
+                //   return { androidUser: "Android Ios User" };
+                // }
             }
             catch (error) {
                 throw error.message;

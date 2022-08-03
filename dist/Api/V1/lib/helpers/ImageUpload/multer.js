@@ -10,7 +10,7 @@ const storage = multer_1.default.diskStorage({
         cb(null, path.join(__dirname, "/uploadProfile/"));
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
+        cb(null, file.originalname);
     },
 });
 const fileFilter = (req, file, cb) => {
