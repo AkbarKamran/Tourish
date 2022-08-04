@@ -44,6 +44,12 @@ export default new (class TourService {
       throw error.message;
     }
   };
-
-  private userType = async (type: any) => {};
+  getTourDetails = async (id: any) => {
+    try {
+      const details = await TourDbLayer.getTourDetails(id);
+      return details;
+    } catch (error) {
+      throw error;
+    }
+  };
 })();

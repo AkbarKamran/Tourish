@@ -9,7 +9,7 @@ import validation from "./validation";
 import { akbar } from "../../lib/helpers/helper";
 import uploadImageToCloud from "../../lib/helpers/ImageUpload/upload";
 export default new (class Tour {
-  public getTourDetails = async (req: Request, res: Response) => {
+  public saveTourDetails = async (req: Request, res: Response) => {
     try {
       const {
         account_type,
@@ -77,7 +77,7 @@ export default new (class Tour {
             },
           };
 
-          return successResponse(200, "All Tour Details", data, res);
+          return successResponse(200, "Tour Details", data, res);
         } else {
           successResponse(200, "Something Went wrong", "", res);
         }
@@ -101,6 +101,27 @@ export default new (class Tour {
       //     return successResponse(400, "Invalid Parameter", [{ data: "" }], res);
       //   }
       // }
+    } catch (error: any) {
+      internalServerError(
+        "Server Error",
+        [{ valid: false, data: error.message }],
+        res
+      );
+    }
+  };
+  public getTourDetails = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.query;
+
+      if (!!!id) {
+        return successResponse(400, "Invalid Id parameter", "", res);
+      }
+      try {
+        const data = await TourService.getTourDetails(id);
+        return successResponse(200, "Tour Details", data, res);
+      } catch (error: any) {
+        dbError([{ valid: false, data: error.message }], res);
+      }
     } catch (error: any) {
       internalServerError(
         "Server Error",

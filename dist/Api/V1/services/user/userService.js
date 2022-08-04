@@ -44,7 +44,15 @@ exports.default = new (class TourService {
                 throw error.message;
             }
         });
-        this.userType = (type) => __awaiter(this, void 0, void 0, function* () { });
+        this.getTourDetails = (id) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const details = yield userLayer_1.default.getTourDetails(id);
+                return details;
+            }
+            catch (error) {
+                throw error;
+            }
+        });
     }
 })();
 //# sourceMappingURL=userService.js.map

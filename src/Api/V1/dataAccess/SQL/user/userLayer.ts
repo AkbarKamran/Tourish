@@ -38,4 +38,29 @@ export default new (class TourDbLayer {
       throw error;
     }
   };
+
+  public getTourDetails = async (id: any) => {
+    try {
+      const getTour = `select * from dbo.neTour where ID = ${id}`;
+      const getTourImages = `select * from dbo.neTourImages where tourId = ${id}`;
+      const getBusImages = `select  * from dbo.neBusImages where tourId = ${id}`;
+
+      const tour: any = await baseQuery.runQuery(getTour);
+      const busImages: any = await baseQuery.runQuery(getBusImages);
+      const tourImages: any = await baseQuery.runQuery(getTourImages);
+
+      // console.log(tour);
+      // console.log(busImages);
+      // console.log(tourImages);
+
+      let data = tour[0];
+      data.images = {
+        bus_images: busImages,
+        tour_images: tourImages,
+      };
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
 })();

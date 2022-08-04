@@ -41,6 +41,28 @@ exports.default = new (class TourDbLayer {
                 throw error;
             }
         });
+        this.getTourDetails = (id) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const getTour = `select * from dbo.neTour where ID = ${id}`;
+                const getTourImages = `select * from dbo.neTourImages where tourId = ${id}`;
+                const getBusImages = `select  * from dbo.neBusImages where tourId = ${id}`;
+                const tour = yield baseQuery_1.default.runQuery(getTour);
+                const busImages = yield baseQuery_1.default.runQuery(getBusImages);
+                const tourImages = yield baseQuery_1.default.runQuery(getTourImages);
+                // console.log(tour);
+                // console.log(busImages);
+                // console.log(tourImages);
+                let data = tour[0];
+                data.images = {
+                    bus_images: busImages,
+                    tour_images: tourImages,
+                };
+                return data;
+            }
+            catch (error) {
+                throw error;
+            }
+        });
     }
 })();
 //# sourceMappingURL=userLayer.js.map

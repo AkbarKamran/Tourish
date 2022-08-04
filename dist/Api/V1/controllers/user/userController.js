@@ -17,7 +17,7 @@ const userService_1 = __importDefault(require("../../services/user/userService")
 const upload_1 = __importDefault(require("../../lib/helpers/ImageUpload/upload"));
 exports.default = new (class Tour {
     constructor() {
-        this.getTourDetails = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.saveTourDetails = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { account_type, tour_date, tour_destination, tour_departure, bus_name, bus_number, } = req.body;
                 if (!!!account_type ||
@@ -57,7 +57,7 @@ exports.default = new (class Tour {
                                 tour_images: tourImagesDetails,
                             },
                         };
-                        return (0, responseHandler_1.successResponse)(200, "All Tour Details", data, res);
+                        return (0, responseHandler_1.successResponse)(200, "Tour Details", data, res);
                     }
                     else {
                         (0, responseHandler_1.successResponse)(200, "Something Went wrong", "", res);
@@ -82,6 +82,24 @@ exports.default = new (class Tour {
                 //     return successResponse(400, "Invalid Parameter", [{ data: "" }], res);
                 //   }
                 // }
+            }
+            catch (error) {
+                (0, responseHandler_1.internalServerError)("Server Error", [{ valid: false, data: error.message }], res);
+            }
+        });
+        this.getTourDetails = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.query;
+                if (!!!id) {
+                    return (0, responseHandler_1.successResponse)(400, "Invalid Id parameter", "", res);
+                }
+                try {
+                    const data = yield userService_1.default.getTourDetails(id);
+                    return (0, responseHandler_1.successResponse)(200, "Tour Details", data, res);
+                }
+                catch (error) {
+                    (0, responseHandler_1.dbError)([{ valid: false, data: error.message }], res);
+                }
             }
             catch (error) {
                 (0, responseHandler_1.internalServerError)("Server Error", [{ valid: false, data: error.message }], res);

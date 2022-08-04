@@ -17,6 +17,7 @@ multer_1.default.fields([
     {
         name: "tour_images",
     },
-]), userController_1.default.getTourDetails);
+]), userController_1.default.saveTourDetails);
+router.get("/tour", userController_1.default.getTourDetails);
 exports.default = router;
 //# sourceMappingURL=user.js.map

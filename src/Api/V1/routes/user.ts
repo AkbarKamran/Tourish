@@ -16,6 +16,7 @@ router.post(
       name: "tour_images",
     },
   ]),
-  Tour.getTourDetails
+  Tour.saveTourDetails
 );
+router.get("/tour", Tour.getTourDetails);
 export default router;
